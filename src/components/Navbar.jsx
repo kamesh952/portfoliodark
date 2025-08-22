@@ -57,7 +57,7 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <p className='text-white text-[38px] font-bold cursor-pointer flex '>
+          <p className='text-white text-[28px] font-bold cursor-pointer flex '>
             Kamesh  &nbsp;
             <span className='sm:block hidden text-[#915EFF]'> R</span>
           </p>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
+
 const works = [
   {
     id: 1,
@@ -590,136 +591,127 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
     );
   };
 
-  const Works = () => {
-    const [filter, setFilter] = useState("all");
-    const [isVisible, setIsVisible] = useState(false);
-    const sectionRef = useRef(null);
 
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        },
-        { threshold: 0.1 }
-      );
+const Works = () => {
+  const [filter, setFilter] = useState("all");
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
-      if (sectionRef.current) {
-        observer.observe(sectionRef.current);
-      }
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
 
-      return () => observer.disconnect();
-    }, []);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
-    const filteredWorks = filter === "all" 
-      ? works 
-      : works.filter((work) => work.category === filter);
+    return () => observer.disconnect();
+  }, []);
 
-    const filterOptions = [
-      { key: "all", label: "All Projects", },
-      { key: "web", label: "Web Development",  },
-      { key: "ml", label: "AI Applications", },
-    ];
+  const filteredWorks = filter === "all" 
+    ? works 
+    : works.filter((work) => work.category === filter);
 
-    const useHorizontalLayout = filter !== "all";
+  const filterOptions = [
+    { key: "all", label: "All Projects" },
+    { key: "web", label: "Web Development" },
+    { key: "ml", label: "AI Applications" },
+  ];
 
-    const getGridClasses = () => {
-      if (useHorizontalLayout) {
-        return "grid grid-cols-1 gap-8";
-      }
-      return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8";
-    };
+  const useHorizontalLayout = filter !== "all";
 
-    return (
-      <div ref={sectionRef} className="bg-gray-950 min-h-screen py-16 px-4 sm:px-6 lg:px-8" id="works">
-        <div className="max-w-7xl mx-auto">
-          <div className={`text-center transition-all duration-1000 transform ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            <p className="text-gray-400 text-lg font-medium tracking-wider uppercase mb-2">
-              My work
-            </p>
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Projects.
-              </span>
-            </h2>
-            <p className="mt-4 text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed">
-              Following projects showcase my skills and experience through real-world examples of my work. Each project is briefly described with links to code repositories and live demos. It reflects my ability to solve complex problems, work with different technologies, and manage projects effectively.
-            </p>
-          </div>
+  const getGridClasses = () => {
+    if (useHorizontalLayout) {
+      return "grid grid-cols-1 gap-8";
+    }
+    return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8";
+  };
 
-          <div className={`flex justify-center flex-wrap gap-4 my-12 transition-all duration-1000 delay-300 transform ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            {filterOptions.map((option) => (
-              <button
-                key={option.key}
-                onClick={() => setFilter(option.key)}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2 ${
-                  filter === option.key
-                    ? option.key === "web" 
-                      ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25'
-                      : option.key === "ml"
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25'
-                      : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
-                }`}
-              >
-                <span>{option.icon}</span>
-                {option.label}
-              </button>
-            ))}
-          </div>
+  return (
+    <div ref={sectionRef} className="bg-gray-950 min-h-screen py-16 px-4 sm:px-6 lg:px-8" id="works">
+      <div className="max-w-7xl mx-auto">
+        <div className={`text-center transition-all duration-1000 transform ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}>
+          <p className="text-gray-400 text-lg font-medium tracking-wider uppercase mb-2">
+            My work
+          </p>
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Projects.
+            </span>
+          </h2>
+          <p className="mt-4 text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed">
+            Following projects showcase my skills and experience through real-world examples of my work. Each project is briefly described with links to code repositories and live demos. It reflects my ability to solve complex problems, work with different technologies, and manage projects effectively.
+          </p>
+        </div>
 
-          <div className={getGridClasses() + " mt-16"}>
-            {filteredWorks.map((work, index) => (
-              <div
-                key={work.id}
-                className={work.featured && filter === "all" ? "col-span-full" : ""}
-              >
-                <WorkCard 
-                  work={work} 
-                  index={index} 
-                  useHorizontalLayout={useHorizontalLayout}
-                  isFeaturedLayout={work.featured && filter === "all"}
-                />
+        <div className={`flex justify-center flex-wrap gap-4 my-12 transition-all duration-1000 delay-300 transform ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}>
+          {filterOptions.map((option) => (
+            <button
+              key={option.key}
+              onClick={() => setFilter(option.key)}
+              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2 ${
+                filter === option.key
+                  ? option.key === "web" 
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25'
+                    : option.key === "ml"
+                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25'
+                    : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+
+        <div className={getGridClasses() + " mt-16"}>
+          {filteredWorks.map((work, index) => (
+            <div
+              key={work.id}
+              className={work.featured && filter === "all" ? "col-span-full" : ""}
+            >
+              <WorkCard 
+                work={work} 
+                index={index} 
+                useHorizontalLayout={useHorizontalLayout}
+                isFeaturedLayout={work.featured && filter === "all"}
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 delay-700 transform ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}>
+          {[
+            { number: works.length, label: "Projects Completed" },
+            { number: works.filter(w => w.category === "web").length, label: "Web Applications" },
+            { number: works.filter(w => w.category === "ml").length, label: "AI Projects" },
+            { number: works.filter(w => w.featured).length, label: "Featured Works" },
+          ].map((stat, index) => (
+            <div key={index} className="text-center group">
+              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
+                {stat.number}+
               </div>
-            ))}
-          </div>
-
-          <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 delay-700 transform ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}>
-            {[
-              { number: works.length, label: "Projects Completed" },
-              { number: works.filter(w => w.category === "web").length, label: "Web Applications" },
-              { number: works.filter(w => w.category === "ml").length, label: "AI Projects" },
-              { number: works.filter(w => w.featured).length, label: "Featured Works" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center group">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {stat.number}+
-                </div>
-                <div className="text-gray-400 text-sm font-medium uppercase tracking-wider">
-                  {stat.label}
-                </div>
+              <div className="text-gray-400 text-sm font-medium uppercase tracking-wider">
+                {stat.label}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
-  const SectionWrapper = (Component, sectionId) => {
-    return () => (
-      <section id={sectionId} className="relative">
-        <span className="section-anchor" id={sectionId}></span>
-        <Component />
-      </section>
-    );
-  };
-
-  export default SectionWrapper(Works, "works");
+export default Works;
