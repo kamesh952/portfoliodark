@@ -16,40 +16,44 @@ const Computers = ({ isMobile, mousePosition }) => {
   const targetPosition = useRef({ x: 0, y: 0, z: 0 });
   const currentPosition = useRef({ x: 0, y: 0, z: 0 });
 
-  useFrame(() => {
-    if (meshRef.current && mousePosition) {
-      // 🔥 Increase sensitivity for more responsive cursor tracking
-      targetRotation.current.x = mousePosition.y * 0.3 - 0.01;
-      targetRotation.current.y = mousePosition.x * 0.3 - 0.2;
-      targetRotation.current.z = mousePosition.x * 0.05 - 0.1;
+  useFrame((state) => {
+    if (meshRef.current) {
+      if (!isMobile && mousePosition) {
+        // 🔥 Desktop → cursor-based motion
+        targetRotation.current.x = mousePosition.y * 0.3 - 0.01;
+        targetRotation.current.y = mousePosition.x * 0.3 - 0.2;
+        targetRotation.current.z = mousePosition.x * 0.05 - 0.1;
 
-      targetPosition.current.x = mousePosition.x * 0.5;
-      targetPosition.current.y = -mousePosition.y * 0.5;
-      targetPosition.current.z = 0;
+        targetPosition.current.x = mousePosition.x * 0.5;
+        targetPosition.current.y = -mousePosition.y * 0.5;
+        targetPosition.current.z = 0;
 
-      // 🔥 Increase lerp factors for faster response
-      currentRotation.current.x = lerp(currentRotation.current.x, targetRotation.current.x, 0.12);
-      currentRotation.current.y = lerp(currentRotation.current.y, targetRotation.current.y, 0.12);
-      currentRotation.current.z = lerp(currentRotation.current.z, targetRotation.current.z, 0.12);
+        currentRotation.current.x = lerp(currentRotation.current.x, targetRotation.current.x, 0.12);
+        currentRotation.current.y = lerp(currentRotation.current.y, targetRotation.current.y, 0.12);
+        currentRotation.current.z = lerp(currentRotation.current.z, targetRotation.current.z, 0.12);
 
-      currentPosition.current.x = lerp(currentPosition.current.x, targetPosition.current.x, 0.1);
-      currentPosition.current.y = lerp(currentPosition.current.y, targetPosition.current.y, 0.1);
+        currentPosition.current.x = lerp(currentPosition.current.x, targetPosition.current.x, 0.1);
+        currentPosition.current.y = lerp(currentPosition.current.y, targetPosition.current.y, 0.1);
+      } else if (isMobile) {
+        // 📱 Mobile → idle floating/rotating animation
+        const t = state.clock.getElapsedTime();
+        currentRotation.current.x = Math.sin(t * 0.6) * 0.05 - 0.01;
+        currentRotation.current.y = Math.cos(t * 0.4) * 0.1 - 0.2;
+        currentRotation.current.z = Math.sin(t * 0.5) * 0.03 - 0.1;
 
-      meshRef.current.rotation.x = currentRotation.current.x;
-      meshRef.current.rotation.y = currentRotation.current.y;
-      meshRef.current.rotation.z = currentRotation.current.z;
+        currentPosition.current.y = Math.sin(t * 0.8) * 0.15; // gentle up-down
+        currentPosition.current.x = Math.cos(t * 0.6) * 0.1; // slight left-right
+      } else {
+        // Smoothly return to default
+        currentRotation.current.x = lerp(currentRotation.current.x, -0.01, 0.05);
+        currentRotation.current.y = lerp(currentRotation.current.y, -0.2, 0.05);
+        currentRotation.current.z = lerp(currentRotation.current.z, -0.1, 0.05);
 
-      meshRef.current.position.x = currentPosition.current.x;
-      meshRef.current.position.y = currentPosition.current.y;
-    } else if (meshRef.current && !mousePosition) {
-      // Smoothly return to default
-      currentRotation.current.x = lerp(currentRotation.current.x, -0.01, 0.05);
-      currentRotation.current.y = lerp(currentRotation.current.y, -0.2, 0.05);
-      currentRotation.current.z = lerp(currentRotation.current.z, -0.1, 0.05);
+        currentPosition.current.x = lerp(currentPosition.current.x, 0, 0.05);
+        currentPosition.current.y = lerp(currentPosition.current.y, 0, 0.05);
+      }
 
-      currentPosition.current.x = lerp(currentPosition.current.x, 0, 0.05);
-      currentPosition.current.y = lerp(currentPosition.current.y, 0, 0.05);
-
+      // Apply rotation & position
       meshRef.current.rotation.x = currentRotation.current.x;
       meshRef.current.rotation.y = currentRotation.current.y;
       meshRef.current.rotation.z = currentRotation.current.z;
@@ -101,7 +105,7 @@ const ComputersCanvas = ({ mousePosition }) => {
       dpr={[1, 1]}
       camera={{ position: [20, 3, 5], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
-      style={{ cursor: "none" }} // Hide system cursor
+      style={{ cursor: isMobile ? "default" : "none" }} // Hide cursor only on desktop
     >
       <Suspense fallback={<CanvasLoader />}>
         <Computers isMobile={isMobile} mousePosition={mousePosition} />
@@ -111,4 +115,4 @@ const ComputersCanvas = ({ mousePosition }) => {
   );
 };
 
-export default ComputersCanvas
+export default ComputersCanvas;

@@ -59,7 +59,7 @@ const Navbar = () => {
         >
           <p className='text-white text-[28px] font-bold cursor-pointer flex '>
             Kamesh  &nbsp;
-            <span className='sm:block hidden text-[#915EFF]'> R</span>
+            <span className='  text-[#915EFF]'> R</span>
           </p>
         </Link>
 

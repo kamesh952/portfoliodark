@@ -167,17 +167,18 @@ const Hero = () => {
           animate={isMobile ? mobileFloating : undefined}
         >
           <motion.h1
-            className={`${styles.heroHeadText} text-white text-[30px] sm:text-[50px] md:text-[60px] lg:text-[80px] leading-[35px] sm:leading-[55px] md:leading-[65px] lg:leading-[85px]`}
+            className={`${styles.heroHeadText} text-white text-[32px] xs:text-[40px] sm:text-[50px] md:text-[60px] lg:text-[80px] leading-[36px] xs:leading-[44px] sm:leading-[55px] md:leading-[65px] lg:leading-[85px]`}
           >
             <motion.span
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
               viewport={{ once: false }}
+              className="inline-block whitespace-nowrap"
             >
               Hi, I'm{" "}
             </motion.span>
-            <span className="text-[#915EFF]">
+            <span className="text-[#915EFF] block xs:inline-block mt-1 xs:mt-0">
               {name.split("").map((char, index) => (
                 <motion.span
                   key={index}
@@ -199,6 +200,10 @@ const Hero = () => {
                   }
                   viewport={{ once: false }}
                   className="inline-block"
+                  style={{ 
+                    minWidth: char === ' ' ? '0.25em' : 'auto',
+                    textShadow: !isMobile ? "0 0 10px rgba(145, 94, 255, 0.5)" : "none"
+                  }}
                 >
                   {char}
                 </motion.span>
@@ -207,7 +212,7 @@ const Hero = () => {
           </motion.h1>
 
           <motion.p
-            className={`${styles.heroSubText} mt-2 text-white-100 text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] leading-[20px] sm:leading-[24px] md:leading-[28px] lg:leading-[32px] max-w-3xl`}
+            className={`${styles.heroSubText} mt-2 text-white-100 text-[14px] xs:text-[16px] sm:text-[18px] md:text-[20px] leading-[20px] xs:leading-[22px] sm:leading-[24px] md:leading-[28px] max-w-3xl`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1 }}
@@ -217,15 +222,17 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.4 }}
+              className="block xs:inline"
             >
               Web Developer & UI/UX Designer
             </motion.span>
-            <br className="hidden sm:block" />
-            <span className="sm:hidden"> & </span>
+            <span className="hidden xs:inline">, </span>
+            <br className="xs:hidden" />
             <motion.span
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 1.4, duration: 0.4 }}
+              className="block xs:inline"
             >
               I develop modern, user{" "}
             </motion.span>
@@ -234,6 +241,7 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 1.6, duration: 0.4 }}
+              className="block xs:inline"
             >
               interfaces and web applications
             </motion.span>
@@ -241,11 +249,11 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Canvas */}
+      {/* Canvas - Increased size for mobile */}
       <motion.div
         className={`absolute ${
           isMobile
-            ? "top-[40%] left-0 w-full h-[60%]"
+            ? "top-[30%] left-0 w-full h-[70%]"
             : "top-[25%] left-0 w-full h-[75%]"
         }`}
         initial={{ opacity: 0, scale: 0.85 }}
@@ -255,7 +263,7 @@ const Hero = () => {
       >
         <ComputersCanvas
           className={`${
-            isMobile ? "scale-[0.7] sm:scale-[0.85] md:scale-100" : "scale-100"
+            isMobile ? "scale-[0.9] sm:scale-[0.95] md:scale-100" : "scale-100"
           } transition-transform duration-300`}
           mousePosition={mousePosition}
           isMobile={isMobile}
