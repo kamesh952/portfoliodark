@@ -219,7 +219,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="bg-gray-900 rounded-3xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.01] hover:shadow-2xl flex flex-col">
+        <div className="bg-gray-900 rounded-3xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.01] hover:shadow-2xl flex flex-col border-2 border-transparent hover:border-purple-500">
           <div className="absolute inset-0 rounded-3xl p-[3px] bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
             <div className="bg-gray-900 rounded-3xl h-full w-full" />
           </div>
@@ -357,7 +357,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="bg-gray-900 p-5 rounded-2xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl flex flex-col md:flex-row h-full">
+        <div className="bg-gray-900 p-5 rounded-2xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl flex flex-col md:flex-row h-full border-2 border-transparent hover:border-purple-500">
           <div className={`absolute inset-0 rounded-2xl p-[2px] ${
             isML 
               ? 'bg-gradient-to-r from-purple-500 to-pink-500'
@@ -415,7 +415,8 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
                 {work.name}
               </h3>
               
-              <div className={`overflow-hidden transition-all duration-500 ${(isHovered || isTouched) ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0 md:max-h-0'}`}>
+              {/* Always show description on desktop for ML and Web sections */}
+              <div className="overflow-hidden transition-all duration-500 max-h-40 opacity-100">
                 <p className="text-gray-300 text-sm leading-relaxed mb-4">
                   {work.description}
                 </p>
@@ -479,7 +480,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="bg-gray-900 p-5 rounded-2xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl h-full flex flex-col">
+      <div className="bg-gray-900 p-5 rounded-2xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl h-full flex flex-col border-2 border-transparent hover:border-purple-500">
         <div className={`absolute inset-0 rounded-2xl p-[2px] ${
           isML 
             ? 'bg-gradient-to-r from-purple-500 to-pink-500'
@@ -537,7 +538,8 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
               {work.name}
             </h3>
             
-            <div className={`overflow-hidden transition-all duration-500 flex-1 ${(isHovered || isTouched) ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0 md:max-h-0'}`}>
+            {/* Always show description on desktop for ML and Web sections */}
+            <div className="overflow-hidden transition-all duration-500 max-h-40 opacity-100 flex-1">
               <p className="text-gray-300 text-sm leading-relaxed">
                 {work.description}
               </p>
@@ -579,145 +581,145 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
                   <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" />
                 </svg>
                 Code
-              </a>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const Works = () => {
-  const [filter, setFilter] = useState("all");
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const filteredWorks = filter === "all" 
-    ? works 
-    : works.filter((work) => work.category === filter);
-
-  const filterOptions = [
-    { key: "all", label: "All Projects", icon: "🚀" },
-    { key: "web", label: "Web Development", icon: "🌐" },
-    { key: "ml", label: "AI Applications", icon: "🤖" },
-  ];
-
-  const useHorizontalLayout = filter !== "all";
-
-  const getGridClasses = () => {
-    if (useHorizontalLayout) {
-      return "grid grid-cols-1 gap-8";
-    }
-    return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8";
   };
 
-  return (
-    <div ref={sectionRef} className="bg-gray-950 min-h-screen py-16 px-4 sm:px-6 lg:px-8" id="works">
-      <div className="max-w-7xl mx-auto">
-        <div className={`text-center transition-all duration-1000 transform ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <p className="text-gray-400 text-lg font-medium tracking-wider uppercase mb-2">
-            My work
-          </p>
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Projects.
-            </span>
-          </h2>
-          <p className="mt-4 text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed">
-            Following projects showcase my skills and experience through real-world examples of my work. Each project is briefly described with links to code repositories and live demos. It reflects my ability to solve complex problems, work with different technologies, and manage projects effectively.
-          </p>
-        </div>
+  const Works = () => {
+    const [filter, setFilter] = useState("all");
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef(null);
 
-        <div className={`flex justify-center flex-wrap gap-4 my-12 transition-all duration-1000 delay-300 transform ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          {filterOptions.map((option) => (
-            <button
-              key={option.key}
-              onClick={() => setFilter(option.key)}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2 ${
-                filter === option.key
-                  ? option.key === "web" 
-                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25'
-                    : option.key === "ml"
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25'
-                    : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
-              }`}
-            >
-              <span>{option.icon}</span>
-              {option.label}
-            </button>
-          ))}
-        </div>
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.1 }
+      );
 
-        <div className={getGridClasses() + " mt-16"}>
-          {filteredWorks.map((work, index) => (
-            <div
-              key={work.id}
-              className={work.featured && filter === "all" ? "col-span-full" : ""}
-            >
-              <WorkCard 
-                work={work} 
-                index={index} 
-                useHorizontalLayout={useHorizontalLayout}
-                isFeaturedLayout={work.featured && filter === "all"}
-              />
-            </div>
-          ))}
-        </div>
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
 
-        <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 delay-700 transform ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          {[
-            { number: works.length, label: "Projects Completed" },
-            { number: works.filter(w => w.category === "web").length, label: "Web Applications" },
-            { number: works.filter(w => w.category === "ml").length, label: "AI Projects" },
-            { number: works.filter(w => w.featured).length, label: "Featured Works" },
-          ].map((stat, index) => (
-            <div key={index} className="text-center group">
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
-                {stat.number}+
+      return () => observer.disconnect();
+    }, []);
+
+    const filteredWorks = filter === "all" 
+      ? works 
+      : works.filter((work) => work.category === filter);
+
+    const filterOptions = [
+      { key: "all", label: "All Projects", },
+      { key: "web", label: "Web Development",  },
+      { key: "ml", label: "AI Applications", },
+    ];
+
+    const useHorizontalLayout = filter !== "all";
+
+    const getGridClasses = () => {
+      if (useHorizontalLayout) {
+        return "grid grid-cols-1 gap-8";
+      }
+      return "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8";
+    };
+
+    return (
+      <div ref={sectionRef} className="bg-gray-950 min-h-screen py-16 px-4 sm:px-6 lg:px-8" id="works">
+        <div className="max-w-7xl mx-auto">
+          <div className={`text-center transition-all duration-1000 transform ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}>
+            <p className="text-gray-400 text-lg font-medium tracking-wider uppercase mb-2">
+              My work
+            </p>
+            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Projects.
+              </span>
+            </h2>
+            <p className="mt-4 text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed">
+              Following projects showcase my skills and experience through real-world examples of my work. Each project is briefly described with links to code repositories and live demos. It reflects my ability to solve complex problems, work with different technologies, and manage projects effectively.
+            </p>
+          </div>
+
+          <div className={`flex justify-center flex-wrap gap-4 my-12 transition-all duration-1000 delay-300 transform ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}>
+            {filterOptions.map((option) => (
+              <button
+                key={option.key}
+                onClick={() => setFilter(option.key)}
+                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2 ${
+                  filter === option.key
+                    ? option.key === "web" 
+                      ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25'
+                      : option.key === "ml"
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25'
+                      : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+              >
+                <span>{option.icon}</span>
+                {option.label}
+              </button>
+            ))}
+          </div>
+
+          <div className={getGridClasses() + " mt-16"}>
+            {filteredWorks.map((work, index) => (
+              <div
+                key={work.id}
+                className={work.featured && filter === "all" ? "col-span-full" : ""}
+              >
+                <WorkCard 
+                  work={work} 
+                  index={index} 
+                  useHorizontalLayout={useHorizontalLayout}
+                  isFeaturedLayout={work.featured && filter === "all"}
+                />
               </div>
-              <div className="text-gray-400 text-sm font-medium uppercase tracking-wider">
-                {stat.label}
+            ))}
+          </div>
+
+          <div className={`mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 delay-700 transform ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}>
+            {[
+              { number: works.length, label: "Projects Completed" },
+              { number: works.filter(w => w.category === "web").length, label: "Web Applications" },
+              { number: works.filter(w => w.category === "ml").length, label: "AI Projects" },
+              { number: works.filter(w => w.featured).length, label: "Featured Works" },
+            ].map((stat, index) => (
+              <div key={index} className="text-center group">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
+                  {stat.number}+
+                </div>
+                <div className="text-gray-400 text-sm font-medium uppercase tracking-wider">
+                  {stat.label}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-const SectionWrapper = (Component, sectionId) => {
-  return () => (
-    <section id={sectionId} className="relative">
-      <span className="section-anchor" id={sectionId}></span>
-      <Component />
-    </section>
-  );
-};
+  const SectionWrapper = (Component, sectionId) => {
+    return () => (
+      <section id={sectionId} className="relative">
+        <span className="section-anchor" id={sectionId}></span>
+        <Component />
+      </section>
+    );
+  };
 
-export default SectionWrapper(Works, "works");
+  export default SectionWrapper(Works, "works");
