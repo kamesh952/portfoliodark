@@ -15,7 +15,7 @@ import {
 const works = [
   {
     id: 1,
-    name: "Version Text AI - Add text Behind Image",
+    name: "VisionText AI - Add text Behind Image",
     description:
       "An AI-powered application that intelligently places text behind objects in images using advanced computer vision and machine learning algorithms.",
     category: "ml",
