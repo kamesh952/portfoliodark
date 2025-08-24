@@ -37,7 +37,7 @@ const works = [
       "A powerful background removal tool using state-of-the-art AI models to precisely separate subjects from backgrounds with professional quality results.",
     category: "ml",
     image:
-      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop&crop=center",
+      "logo.png",
     tags: [
       { name: "HTML", color: "text-orange-400", icon: <Code className="w-4 h-4" /> },
       { name: "UI/UX", color: "text-purple-400", icon: <Globe className="w-4 h-4" /> },

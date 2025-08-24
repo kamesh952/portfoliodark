@@ -1,14 +1,14 @@
 // components/Footer.jsx
-import React from 'react';
+import React from "react";
 import {
   MapPinIcon,
   EnvelopeIcon,
   PhoneIcon,
-  ChevronRightIcon
-} from '@heroicons/react/24/outline';
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 
 const Footer = () => {
-  const quickLinks = [ 'About', 'Projects', 'Contact'];
+  const quickLinks = ["About", "Projects", "Contact"];
 
   return (
     <footer className="bg-transparent text-white pt-16 pb-8">
@@ -16,17 +16,18 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-8">
           {/* Brand Section */}
           <div className="md:flex-1 md:max-w-sm">
-            <a 
-              href="#" 
+            <a
+              href="#"
               className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6 inline-block hover:opacity-80 transition-opacity duration-300 no-underline"
             >
               Kamesh<span className="text-blue-500">R</span>
             </a>
             <p className="text-gray-300 mb-6 leading-relaxed">
-              Creating elegant digital experiences with modern technologies and creative solutions.
+              Creating elegant digital experiences with modern technologies and
+              creative solutions.
             </p>
           </div>
-          
+
           {/* Quick Links Section */}
           <div className="md:flex-1 md:max-w-xs">
             <h3 className="text-xl font-semibold mb-6 relative pb-2">
@@ -47,7 +48,7 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          
+
           {/* Contact Info Section */}
           <div className="md:flex-1 md:max-w-xs">
             <h3 className="text-xl font-semibold mb-6 relative pb-2">
@@ -57,31 +58,34 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <MapPinIcon className="w-5 h-5 text-blue-500 mt-1 flex-shrink-0" />
-                <p className="text-gray-300">
-                  Chrompet, Chennai
-                </p>
+                <p className="text-gray-300">Chrompet, Chennai</p>
               </div>
               <div className="flex items-start gap-3">
                 <EnvelopeIcon className="w-5 h-5 text-blue-500 mt-1 flex-shrink-0" />
-                <p className="text-gray-300 break-all">
+                <a
+                  href="mailto:kameshramesh006@gmail.com"
+                  className="text-gray-300 break-all hover:text-blue-400 transition-colors"
+                >
                   kameshramesh006@gmail.com
-                </p>
+                </a>
               </div>
+
               <div className="flex items-start gap-3">
                 <PhoneIcon className="w-5 h-5 text-blue-500 mt-1 flex-shrink-0" />
-                <p className="text-gray-300">
-                  www.linkedin.com/in/kamesh-ramesh
-                </p>
+                <a
+                  href="tel:+918680892898"
+                  className="text-gray-300 hover:text-blue-400 transition-colors"
+                >
+                  +91 8680892898
+                </a>
               </div>
             </div>
           </div>
         </div>
-        
+
         {/* Copyright Section */}
         <div className="border-t border-gray-700 pt-8 mt-8 text-center text-gray-400">
-          <p className="text-sm">
-            &copy; 2025 Kamesh R. All Rights Reserved.
-          </p>
+          <p className="text-sm">&copy; 2025 Kamesh R. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
