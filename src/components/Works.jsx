@@ -27,7 +27,7 @@ const works = [
       { name: "Javascript", color: "text-yellow-400", icon: <Code className="w-4 h-4" /> },
       { name: "Image Rendering", color: "text-green-400", icon: <Image className="w-4 h-4" /> },
     ],
-    source_code_link: "https://github.com/kamesh952/Kalm_Holidays.git",
+    source_code_link: "https://github.com/kamesh952/visiontext.git",
     live_link: "https://visiontest-ai.onrender.com/",
   },
   {
@@ -59,7 +59,7 @@ const works = [
       { name: "MongoDB", color: "text-green-400", icon: <Database className="w-4 h-4" /> },
       { name: "Backend-Python", color: "text-blue-400", icon: <Code className="w-4 h-4" /> },
     ],
-    source_code_link: "https://github.com/kamesh952/hotel_db_client.git",
+    source_code_link: "https://github.com/kamesh952/hotel_db.git",
     live_link: "https://hotel-db-client.onrender.com/",
   },
   {
@@ -108,7 +108,7 @@ const works = [
       { name: "UI/UX", color: "text-purple-400", icon: <Globe className="w-4 h-4" /> },
       { name: "Javascript", color: "text-yellow-400", icon: <Code className="w-4 h-4" /> },
     ],
-    source_code_link: "https://github.com/kamesh952/Convert-IQ.git",
+    source_code_link: "https://github.com/kamesh952/convertiq.git",
     live_link: "https://convert-iq.onrender.com/",
   },
   {
@@ -155,7 +155,7 @@ const works = [
       { name: "Gemini API Integration", color: "text-blue-400", icon: <Cpu className="w-4 h-4" /> },
       { name: "HTML", color: "text-orange-400", icon: <Code className="w-4 h-4" /> },
     ],
-    source_code_link: "https://github.com/kamesh952/skillsync_ai_client.git",
+    source_code_link: "https://github.com/kamesh952/skillsync_ai.git",
     live_link: "https://skillsync-ai-client.onrender.com/",
   },
   {
@@ -171,7 +171,7 @@ const works = [
       { name: "Express js", color: "text-gray-400", icon: <Code className="w-4 h-4" /> },
       { name: "PostgreSQL", color: "text-blue-600", icon: <Database className="w-4 h-4" /> },
     ],
-    source_code_link: "https://github.com/kamesh952/Event_Management",
+    source_code_link: "https://github.com/kamesh952/event.git",
     live_link: "https://event-db-client.onrender.com/",
   },
   {
@@ -232,7 +232,6 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
   };
 
   const handleTouchEnd = () => {
-    // Touch end logic can be added here if needed
   };
 
   if (isFeaturedLayout) {
@@ -247,7 +246,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="bg-gray-900 rounded-3xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.01] hover:shadow-2xl flex flex-col border-2 border-transparent hover:border-purple-500">
+        <div className="bg-gray-900 rounded-3xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.01] md:hover:shadow-2xl flex flex-col border-2 border-transparent hover:border-purple-500">
           <div className="absolute inset-0 rounded-3xl p-[3px] bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
             <div className="bg-gray-900 rounded-3xl h-full w-full" />
           </div>
@@ -381,7 +380,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="bg-gray-900 p-5 rounded-2xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl flex flex-col md:flex-row h-full border-2 border-transparent hover:border-purple-500">
+        <div className="bg-gray-900 p-5 rounded-2xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.02] md:hover:shadow-2xl flex flex-col md:flex-row h-full border-2 border-transparent hover:border-purple-500">
           <div
             className={`absolute inset-0 rounded-2xl p-[2px] ${
               isML
@@ -465,7 +464,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
                   href={work.live_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105 flex-1 justify-center shadow-lg"
+                  className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105 flex-1 justify-center"
                 >
                   <ExternalLink className="w-4 h-4" />
                   Live Demo
@@ -474,7 +473,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
                   href={work.source_code_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105 flex-1 justify-center shadow-lg"
+                  className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105 flex-1 justify-center"
                 >
                   <Github className="w-4 h-4" />
                   Code
@@ -498,7 +497,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="bg-gray-900 p-5 rounded-2xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl h-full flex flex-col border-2 border-transparent hover:border-purple-500">
+      <div className="bg-gray-900 p-5 rounded-2xl w-full relative overflow-hidden transition-all duration-500 hover:scale-[1.02] md:hover:shadow-2xl h-full flex flex-col border-2 border-transparent hover:border-purple-500">
         <div
           className={`absolute inset-0 rounded-2xl p-[2px] ${
             isML
@@ -580,7 +579,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
                 href={work.live_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105 flex-1 justify-center shadow-lg"
+                className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105 flex-1 justify-center"
               >
                 <ExternalLink className="w-4 h-4" />
                 Live Demo
@@ -589,7 +588,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
                 href={work.source_code_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105 flex-1 justify-center shadow-lg"
+                className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105 flex-1 justify-center"
               >
                 <Github className="w-4 h-4" />
                 Code
@@ -698,7 +697,6 @@ const Works = () => {
                   : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
               }`}
             >
-              {/* Show icon only on mobile, text only on desktop */}
               <span className="md:hidden">{option.icon}</span>
               <span className="hidden md:block">{option.label}</span>
             </button>
