@@ -20,7 +20,7 @@ const works = [
       "An AI-powered application that intelligently places text behind objects in images using advanced computer vision and machine learning algorithms.",
     category: "ml",
     image:
-      "https://vheer.com/_next/image?url=%2Fimages%2FlandingPages%2Ftext_behind_image%2Fmain_image_1.webp&w=3840&q=75",
+      "main_image_1.webp",
     tags: [
       { name: "HTML", color: "text-orange-400", icon: <Code className="w-4 h-4" /> },
       { name: "UI/UX", color: "text-purple-400", icon: <Globe className="w-4 h-4" /> },
