@@ -249,22 +249,19 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Canvas - Increased size for mobile */}
+      {/* Canvas - Reduced size for mobile */}
       <motion.div
         className={`absolute ${
           isMobile
-            ? "top-[30%] left-0 w-full h-[70%]"
-            : "top-[25%] left-0 w-full h-[75%]"
-        }`}
+            ? "top-[35%] left-0 w-full h-[60%] scale-75"
+            : "top-[25%] left-0 w-full h-[75%] scale-100"
+        } transition-all duration-300`}
         initial={{ opacity: 0, scale: 0.85 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.9, delay: 0.6, ease: "easeOut" }}
         viewport={{ once: false }}
       >
         <ComputersCanvas
-          className={`${
-            isMobile ? "scale-[0.9] sm:scale-[0.95] md:scale-100" : "scale-100"
-          } transition-transform duration-300`}
           mousePosition={mousePosition}
           isMobile={isMobile}
         />
