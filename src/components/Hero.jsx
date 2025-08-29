@@ -5,7 +5,9 @@ import { ComputersCanvas } from "./canvas";
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [handPosition, setHandPosition] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [cameraPermission, setCameraPermission] = useState('idle');
   const containerRef = useRef();
 
   const name = "Kamesh";
@@ -31,43 +33,114 @@ const Hero = () => {
       setMousePosition({ x, y });
     };
 
-    const handleTouchMove = (event) => {
-      if (!containerRef.current || !isMobile) return;
-      const touch = event.touches[0];
-      const rect = containerRef.current.getBoundingClientRect();
-      const x = (touch.clientX - rect.left) / rect.width - 0.5;
-      const y = (touch.clientY - rect.top) / rect.height - 0.5;
-      setMousePosition({ x: x * 0.5, y: y * 0.5 });
-    };
-
-    const handleOrientation = (event) => {
-      if (!isMobile) return;
-      const x = (event.gamma || 0) / 90;
-      const y = (event.beta || 0) / 90;
-      setMousePosition({
-        x: Math.max(-0.3, Math.min(0.3, x * 0.3)),
-        y: Math.max(-0.3, Math.min(0.3, y * 0.3)),
-      });
-    };
-
     if (!isMobile) {
       window.addEventListener("mousemove", handleMouseMove);
-    } else {
-      window.addEventListener("touchmove", handleTouchMove, { passive: true });
-      if (window.DeviceOrientationEvent) {
-        window.addEventListener("deviceorientation", handleOrientation);
-      }
     }
 
     return () => {
       window.removeEventListener("resize", checkMobile);
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
-      if (window.DeviceOrientationEvent) {
-        window.removeEventListener("deviceorientation", handleOrientation);
+    };
+  }, [isMobile]);
+
+  // Initialize hand tracking when on mobile
+  useEffect(() => {
+    if (!isMobile) return;
+
+    let detector = null;
+    let video = null;
+    let animationFrame = null;
+
+    const initializeHandDetection = async () => {
+      try {
+        // Check if media devices are available
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          console.warn("Camera access not supported in this browser");
+          return;
+        }
+
+        // Load TensorFlow.js and handpose model
+        const tf = await import('@tensorflow/tfjs');
+        const handpose = await import('@tensorflow-models/handpose');
+        
+        await tf.ready();
+        
+        // Create detector
+        detector = await handpose.load();
+        
+        // Setup camera
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user' }
+        });
+        
+        video = document.createElement('video');
+        video.srcObject = stream;
+        video.onloadedmetadata = () => {
+          video.play();
+          detectHands();
+        };
+        
+        setCameraPermission('granted');
+      } catch (error) {
+        console.error("Error initializing hand detection:", error);
+        setCameraPermission('denied');
+      }
+    };
+
+    const detectHands = async () => {
+      if (!detector || !video) return;
+
+      try {
+        const hands = await detector.estimateHands(video);
+        
+        if (hands.length > 0) {
+          // Get the palm base (wrist) keypoint
+          const wrist = hands[0].landmarks[0];
+          
+          // Normalize coordinates to [-1, 1] range
+          const x = (wrist[0] / video.videoWidth) * 2 - 1;
+          const y = -((wrist[1] / video.videoHeight) * 2 - 1);
+          
+          setHandPosition({ x, y });
+        } else {
+          setHandPosition(null);
+        }
+      } catch (error) {
+        console.error("Error detecting hands:", error);
+      }
+      
+      animationFrame = requestAnimationFrame(detectHands);
+    };
+
+    initializeHandDetection();
+
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+      
+      if (video && video.srcObject) {
+        video.srcObject.getTracks().forEach(track => track.stop());
       }
     };
   }, [isMobile]);
+
+  // Request camera permission with user interaction
+  const requestCameraAccess = async () => {
+    try {
+      setCameraPermission('requesting');
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      // Immediately stop the stream since we just needed permission
+      stream.getTracks().forEach(track => track.stop());
+      setCameraPermission('granted');
+      
+      // Reload the page to restart hand detection
+      window.location.reload();
+    } catch (error) {
+      console.error("Camera access denied:", error);
+      setCameraPermission('denied');
+    }
+  };
 
   // Animation variants with faster timings
   const containerVariants = {
@@ -262,10 +335,44 @@ const Hero = () => {
         viewport={{ once: false }}
       >
         <ComputersCanvas
-          mousePosition={mousePosition}
+          mousePosition={isMobile ? handPosition : mousePosition}
           isMobile={isMobile}
         />
       </motion.div>
+
+      {/* Camera Permission Prompt */}
+      {isMobile && cameraPermission !== 'granted' && (
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center z-20 p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="bg-gray-900/90 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <h3 className="text-white text-xl font-bold mb-3">Hand Gesture Control</h3>
+            <p className="text-gray-300 mb-5">
+              Move your hand in front of your camera to control the 3D model
+            </p>
+            <button
+              onClick={requestCameraAccess}
+              className="bg-[#915EFF] hover:bg-[#7a4bd8] text-white font-medium py-3 px-6 rounded-lg transition-colors"
+              disabled={cameraPermission === 'requesting'}
+            >
+              {cameraPermission === 'denied' 
+                ? 'Permission Denied - Try Again' 
+                : cameraPermission === 'requesting'
+                  ? 'Requesting...'
+                  : 'Enable Camera Access'
+              }
+            </button>
+            {cameraPermission === 'denied' && (
+              <p className="text-gray-400 text-sm mt-4">
+                Please check your browser permissions and allow camera access for this site
+              </p>
+            )}
+          </div>
+        </motion.div>
+      )}
 
       {/* Scroll Indicator */}
       <motion.div
