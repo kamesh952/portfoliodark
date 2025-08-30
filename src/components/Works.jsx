@@ -118,7 +118,7 @@ const works = [
       "An intelligent conversational AI chatbot powered by Google's Gemini API with natural language processing capabilities and modern React interface.",
     category: "ml",
     image:
-      "https://static.vecteezy.com/system/resources/previews/027/776/370/non_2x/abstract-chatbot-ai-artificial-intelligence-chatbot-ai-is-a-software-application-used-to-chat-with-humans-with-network-technology-on-a-blue-background-vector.jpg",
+      "kalmai.jpg",
     tags: [
       { name: "Gemini API", color: "text-blue-400", icon: <Cpu className="w-4 h-4" /> },
       { name: "React/vite", color: "text-cyan-400", icon: <Code className="w-4 h-4" /> },
