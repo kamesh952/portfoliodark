@@ -478,7 +478,7 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
                   <Github className="w-4 h-4" />
                   Code
                 </a>
-            </div>
+              </div>
             </div>
           </div>
         </div>
@@ -604,7 +604,19 @@ const WorkCard = ({ work, index, useHorizontalLayout, isFeaturedLayout }) => {
 const Works = () => {
   const [filter, setFilter] = useState("all");
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -708,14 +720,14 @@ const Works = () => {
             <div
               key={work.id}
               className={
-                work.featured && filter === "all" ? "hidden md:block md:col-span-full" : ""
+                work.featured && filter === "all" ? "md:col-span-full" : ""
               }
             >
               <WorkCard
                 work={work}
                 index={index}
                 useHorizontalLayout={useHorizontalLayout}
-                isFeaturedLayout={work.featured && filter === "all"}
+                isFeaturedLayout={work.featured && filter === "all" && !isMobile}
               />
             </div>
           ))}
